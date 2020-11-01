@@ -1,0 +1,5 @@
+[masters]
+master[1:3].lab.local
+
+[workers]
+worker[1:3].lab.local
