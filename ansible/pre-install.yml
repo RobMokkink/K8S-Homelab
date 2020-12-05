@@ -36,8 +36,6 @@
       - gnupg2
     container_packages:
       - containerd.io
-      - docker-ce
-      - docker-ce-cli
     k8s_packages:
       - kubelet
       - kubeadm
@@ -52,13 +50,14 @@
         - "10250"
         - "10251"
         - "10252"
+        - "30000:32767"
       worker:
         - "22"
         - "80"
         - "443"
         - "10250"
+        - "30000:32767"
   tasks:
-
 
     - name: Hush config file for ubuntu
       file:
@@ -67,6 +66,28 @@
         group: devops
         state: touch
       changed_when: false
+
+    - name: Configure networksettings for sysctl
+      copy:
+        src: k8s.conf
+        dest: /etc/sysctl.d/k8s.conf
+      notify: reload sysconfig
+
+    - name: Force handlers
+      meta: flush_handlers
+
+    - name: Configure modules for containerd
+      copy:
+        src: containerd.conf
+        dest: /etc/modules-load.d/containerd.conf
+
+    - name: Load modules
+      modprobe:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - overlay
+        - br_netfilter
 
     - name: Configure the ufw firewall for master node
       ufw:
@@ -124,7 +145,7 @@
         - https://packages.cloud.google.com/apt/doc/apt-key.gpg
         - https://download.docker.com/linux/ubuntu/gpg
 
-    - name: Add the docker-ce apt repository
+    - name: Add the docker apt repository
       apt_repository:
         repo: "deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
@@ -147,17 +168,12 @@
         name: "{{ container_packages }}"
         state: present
 
-    - name: Configure docker daemon
-      copy:
-        src: daemon.json
-        dest: /etc/docker/daemon.json
-      notify: restart docker
 
-    - name: Create systemd drop-in directory
-      file:
-        path: /etc/systemd/system/docker.service.d
-        state: directory
-      notify: restart docker
+    - name: Copy config.toml
+      copy:
+        src: config.toml
+        dest: /etc/containerd/config.toml
+      notify: restart containerd
 
 
     - name: Install the k8s packages
@@ -172,10 +188,13 @@
       changed_when: false
 
   handlers:
-    - name: restart docker
+
+    - name: reload sysconfig
+      command: sysctl --system
+
+    - name: restart containerd
       systemd:
-        name: docker
+        name: containerd
         state: restarted
         enabled: true
         daemon_reload: yes
-
