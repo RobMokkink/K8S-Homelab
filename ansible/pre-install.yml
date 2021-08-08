@@ -2,7 +2,7 @@
 - name: Pre Install k8s
   hosts: all
   vars:
-    k8s_version: "1.19.2-00"
+    k8s_version: "1.21.3-00"
     k8s_network: "weave"
     k8s_network_fw:
       calico:
@@ -66,6 +66,10 @@
         group: devops
         state: touch
       changed_when: false
+
+    - name: Set timezone to Europe/Amsterdam
+      community.general.timezone:
+        name: Europe/Amsterdam
 
     - name: Configure networksettings for sysctl
       copy:
