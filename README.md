@@ -46,3 +46,11 @@ This folder ansible contains a prep playbook to setup ubuntu nodes with containe
 There is an example configuration file in install-k8s directory which is needed for kubeadm
 in combination with containerd
 
+## 6 Overlay Network
+See folder overlay-network for instructions
+
+## 7 Check cluster and label nodes
+See folder check-cluster-label-nodes for instructions
+
+## 8 Ingress
+See folder ingress for instructions
