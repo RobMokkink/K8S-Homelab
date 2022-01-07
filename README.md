@@ -8,7 +8,9 @@ Make sure that ```/etc/nsswitch.conf``` is configure correctly, this must be set
 
 Make sure dns entries are there, see the following example:
 
-```/etc/hosts```
+```/etc/hosts```:
+
+```
 10.0.0.10	lb.lab.local lb 
 10.0.0.20	master1.lab.local master1
 10.0.0.21	master2.lab.local master2
@@ -21,7 +23,10 @@ Make sure dns entries are there, see the following example:
 And the following for k8s api and wildcard ingress ```/etc/NetworkManager/dnsmasq.d/02-lab.conf```
 
 ```
+# K8S api points to lb
 address=/k8s.lab.local/10.0.0.10
+
+# wildcard dns entry points to lb
 address=/.apps.lab.local/10.0.0.10
 ```
 
