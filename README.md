@@ -18,7 +18,7 @@ Make sure dns entries are there, see the following example:
 10.0.0.32	worker3.lab.local worker3
 ```
 
-And the following for k8s api and wildcard ingress ```/etc/NetworkManager/dnsmasq.d/02-lab.conf```:
+And the following for k8s api and wildcard ingress ```/etc/NetworkManager/dnsmasq.d/02-lab.conf```
 
 ```
 address=/k8s.lab.local/10.0.0.10
