@@ -21,11 +21,8 @@ Make sure dns entries are there, see the following example:
 And the following for k8s api and wildcard ingress ```/etc/NetworkManager/dnsmasq.d/02-lab.conf```:
 
 ```
-  # K8S Api points to lb
-  address=/k8s.lab.local/10.0.0.10
-
-  # Wildcard dns for ingress to apps on port 80 and 443 
-  address=/.apps.lab.local/10.0.0.10
+address=/k8s.lab.local/10.0.0.10
+address=/.apps.lab.local/10.0.0.10
 ```
 
 Reload networkmanager ```sudo systemctl reload NetworkManager```
