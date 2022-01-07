@@ -2,7 +2,7 @@
 - name: Pre Install k8s
   hosts: all
   vars:
-    k8s_version: "1.21.3-00"
+    k8s_version: "1.23.1-00"
     k8s_network: "weave"
     k8s_network_fw:
       calico:
