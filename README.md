@@ -34,7 +34,7 @@ Reload networkmanager ```sudo systemctl reload NetworkManager```
 
 
 ## 2 Deploy haproxy node
-See the folder haproxy with the config for haproxy
+See the folder [haproxy](haproxy) with the config for haproxy
 
 ## 3 Deploy nodes
 See the following repo on how-to deploy ubuntu nodes with
