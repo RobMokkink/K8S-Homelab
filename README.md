@@ -37,20 +37,20 @@ Reload networkmanager ```sudo systemctl reload NetworkManager```
 See the folder [haproxy](haproxy) with the config for haproxy
 
 ## 3 Deploy nodes
-See the following repo on how-to deploy ubuntu nodes with
+See the following [repo](https://github.com/RobMokkink/terraform/tree/main/libvirt-k8s-ubuntu) on how-to deploy ubuntu nodes with
 
 ## 4 Prep the nodes Ansible
-This folder ansible contains a prep playbook to setup ubuntu nodes with containerd
+See the folder [ansible](ansible) contains a prep playbook to setup ubuntu nodes with containerd
 
 ## 5 Installation
-There is an example configuration file in install-k8s directory which is needed for kubeadm
+There is an example configuration file in [install-k8s](install-k8s) directory which is needed for kubeadm
 in combination with containerd
 
 ## 6 Overlay Network
-See folder overlay-network for instructions
+See folder [overlay-network](overlay-network) for instructions
 
 ## 7 Check cluster and label nodes
-See folder check-cluster-label-nodes for instructions
+See folder [check-cluster-label-nodes](check-cluster-label-nodes) for instructions
 
 ## 8 Ingress
-See folder ingress for instructions
+See folder [ingress](ingress) for instructions
