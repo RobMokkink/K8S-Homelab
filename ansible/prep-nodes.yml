@@ -1,0 +1,204 @@
+---
+- name: Prep nodes for k8s
+  hosts: all
+  vars:
+    k8s_version: "1.26.0-00"
+    k8s_network: "weave"
+    k8s_network_fw:
+      calico:
+        tcp:
+          - "179"
+          - "4789"
+          - "5473"
+          - "443"
+          - "2379"
+          - "9099"
+        udp:
+          - "4789"
+      weave:
+        tcp:
+          - "6781"
+          - "6782"
+          - "6783"
+        udp:
+          - "6783:6784"
+    req_packages:
+      - iptables
+      - arptables
+      - ebtables
+      - apt-transport-https
+      - curl
+      - bash-completion
+      - nfs-common
+      - vim
+      - ca-certificates
+      - software-properties-common
+      - gnupg2
+    container_packages:
+      - containerd.io
+    k8s_packages:
+      - kubelet
+      - kubeadm
+      - kubectl
+    k8s_fw:
+      master:
+        - "22"
+        - "80"
+        - "443"
+        - "6443"
+        - "2379:2380"
+        - "10250"
+        - "10251"
+        - "10252"
+        - "30000:32767"
+      worker:
+        - "22"
+        - "80"
+        - "443"
+        - "10250"
+        - "30000:32767"
+  tasks:
+
+    - name: Hush config file for ubuntu
+      file:
+        path: /home/devops/.hushlogin
+        owner: devops
+        group: devops
+        state: touch
+      changed_when: false
+
+    - name: Set timezone to Europe/Amsterdam
+      community.general.timezone:
+        name: Europe/Amsterdam
+
+    - name: Configure networksettings for sysctl
+      copy:
+        src: k8s.conf
+        dest: /etc/sysctl.d/k8s.conf
+      notify: reload sysconfig
+
+    - name: Force handlers
+      meta: flush_handlers
+
+    - name: Configure modules for containerd
+      copy:
+        src: containerd.conf
+        dest: /etc/modules-load.d/containerd.conf
+
+    - name: Load modules
+      modprobe:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - overlay
+        - br_netfilter
+
+    - name: Configure the ufw firewall for master node
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      loop: "{{ k8s_fw.master }}"
+      when: inventory_hostname in groups.masters
+
+    - name: Configure the ufw firewall for worker node
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      loop: "{{ k8s_fw.worker }}"
+      when: inventory_hostname in groups.workers
+
+    - name: Enable TCP ports for network {{ k8s_network }}
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      loop: "{{ k8s_network_fw[k8s_network].tcp }}"
+
+    - name: Enable UDP ports for network {{ k8s_network }}
+      ufw:
+        rule: allow
+        port: "{{ item}}"
+        proto: udp
+      loop: "{{ k8s_network_fw[k8s_network].udp }}"
+    
+    - name: Enable the ufw firewall at startup
+      ufw:
+        state: enabled
+
+    - name: Upgrade all packages to the latest version
+      apt:
+        name: "*"
+        state: latest
+
+    - name: Update all packages to the latest version
+      apt:
+        upgrade: dist
+
+    - name: Install Required Packges
+      package:
+        name: "{{ req_packages }}"
+        state: present
+
+    - name: Add apt gpg keys
+      apt_key:
+        url: "{{ item }}"
+        state: present
+      loop:
+        - https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        - https://download.docker.com/linux/ubuntu/gpg
+
+    - name: Add the docker apt repository
+      apt_repository:
+        repo: "deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+        filename: docker-ce
+
+    - name: Add the k8s apt repository
+      apt_repository:
+        repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+        filename: kubernetes
+
+    - name: Update packages after adding repo
+      apt:
+        update_cache: True
+        force_apt_get: True
+        cache_valid_time: 3600
+
+    - name: Install container runtime packages
+      apt:
+        name: "{{ container_packages }}"
+        state: present
+
+
+    - name: Copy config.toml
+      copy:
+        src: config.toml
+        dest: /etc/containerd/config.toml
+      notify: restart containerd
+
+
+    - name: Install the k8s packages
+      apt:
+        name: "{{ item }}={{ k8s_version }}"
+        state: present
+        force: true
+      loop: "{{ k8s_packages }}"
+
+    - name: Hold certain k8s packages
+      command: "apt-mark hold kubelet kubeadm kubectl"
+      changed_when: false
+
+  handlers:
+
+    - name: reload sysconfig
+      command: sysctl --system
+
+    - name: restart containerd
+      systemd:
+        name: containerd
+        state: restarted
+        enabled: true
+        daemon_reload: yes
