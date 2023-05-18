@@ -24,3 +24,6 @@ sudo kubeadm init --config cluster.yml --upload-certs
 ```
 sudo kubeadm init --pod-network-cidr=<cidr you need for overlay network> --control-plane-endpoint=<dns name of loadbalancer> --upload-certs
 ```
+
+## Add the rest of the master and worker nodes
+See the output from the ```kubeadm init``` command and add the rest of the master and worker nodes
