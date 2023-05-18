@@ -15,5 +15,8 @@ sudo systemctl restart firewald
 sudo firewall-cmd --list-all
 ```
 
-And create a dns record to point to the haproxy node to create a HA k8s setup, for example ```k8s.lab.local```.
-Make sure that ```controlPlaneEndpoint``` in you k8s config file is configured to match this dns name, for example:
+### Verify haproxy status
+Go to the url of the haproxy server, for example:
+```
+http://lb.lab.local:8443/stats
+```
