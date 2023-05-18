@@ -1,6 +1,6 @@
 # CKA-CKAD-Prep
 
-This repo contains a tutorial on how-to setup k8s for training purposes
+This repo contains a tutorial on how-to setup k8s in HA mode for training purposes
 
 ## 1 Dnsmasq with networkmanager
 If you use the dnsmasq plugin with NetworkManager, see https://fedoramagazine.org/using-the-networkmanagers-dnsmasq-plugin/
