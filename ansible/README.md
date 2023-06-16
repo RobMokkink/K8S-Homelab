@@ -8,3 +8,24 @@ Adjust the variables inside the playbook or specify them on the commandline
 k8s_version: "1.26.0-00"
 k8s_network: "weave"
 ```
+
+## Containerd config file
+The containerd config file, see [config.toml](files/config.toml), is generated using the following commando:
+
+```
+sudo containerd config dump | tee -a ~/config.toml
+```
+
+After that it is adjusted to use systemd cgroup driver by adjust line:
+
+```
+systemd_cgroup = false
+```
+
+To:
+
+```
+systemd_cgroup = true
+```
+
+For more information see the [k8s docs for the cgroup driver](systemd_cgroup = true)
