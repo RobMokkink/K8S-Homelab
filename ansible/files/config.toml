@@ -64,7 +64,7 @@ version = 2
     stream_idle_timeout = "4h0m0s"
     stream_server_address = "127.0.0.1"
     stream_server_port = "0"
-    systemd_cgroup = true
+    systemd_cgroup = false
     tolerate_missing_hugetlb_controller = true
     unset_seccomp_profile = ""
 
@@ -122,7 +122,7 @@ version = 2
             NoPivotRoot = false
             Root = ""
             ShimCgroup = ""
-            SystemdCgroup = false
+            SystemdCgroup = true
 
       [plugins."io.containerd.grpc.v1.cri".containerd.untrusted_workload_runtime]
         base_runtime_spec = ""

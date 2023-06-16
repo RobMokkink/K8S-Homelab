@@ -19,13 +19,13 @@ sudo containerd config dump | tee -a ~/config.toml
 After that it is adjusted to use systemd cgroup driver by adjust line:
 
 ```
-systemd_cgroup = false
+SystemdCgroup = false
 ```
 
 To:
 
 ```
-systemd_cgroup = true
+SystemdCgroup = true
 ```
 
 For more information see the [k8s docs for the cgroup driver](systemd_cgroup = true)
