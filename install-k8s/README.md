@@ -25,5 +25,10 @@ sudo kubeadm init --config cluster.yml --upload-certs
 sudo kubeadm init --pod-network-cidr=<cidr you need for overlay network> --control-plane-endpoint=<dns name of loadbalancer> --upload-certs
 ```
 
+This is an example with the weave overlay network
+```
+sudo kubeadm init --pod-network-cidr=10.32.0.0/12 --control-plane-endpoint=k8s.lab.local:6443 --upload-certs
+```
+
 ## Add the rest of the master and worker nodes
 See the output from the ```kubeadm init``` command and add the rest of the master and worker nodes
