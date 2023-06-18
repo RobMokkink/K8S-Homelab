@@ -9,8 +9,8 @@ Task: run a container name nginx with image nginx
 ### 2: Run container on masternodes
 Task: run a container name schedule-on-masters, using image```busybox``` and command ```sleep 7200```
 
-### 3: Run container in specific master node
-Task: same a previous task, but run the pod on a specific master node (no static pod)
+### 3: Run container on a specific master node
+Task: same a previous task, but run the pod on a master/controle node 1 (no static pod)
 
 ### 4: Create a new single node master and worker cluster manually
 Task: destroy the current cluster and adjust the terraform vars file to only deply one master and one worker. Instead of using the ansible prep tools, use the [k8s docs](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/) to get it up and running. Use weave of calico overlay network.
