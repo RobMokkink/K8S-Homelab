@@ -1,4 +1,4 @@
-# CKA-CKAD-Prep
+# CKA-CKAD-CKS-Prep
 
 This repo contains a tutorial on how-to setup k8s in HA mode for training purposes
 There are also example on which to install a single node master with one worker as well.
