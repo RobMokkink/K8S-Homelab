@@ -1,6 +1,7 @@
 ## CKA-Tasks
 See the tasks below to start prepping for the cka exam
-NOTE: there are now solutions, you must learn to figure it out yourself!
+
+NOTE: there are NO solutions, you must learn to figure it out yourself!
 
 ### 1 Run container
 Task: run a container name nginx with image nginx
