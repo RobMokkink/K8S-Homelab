@@ -1,7 +1,8 @@
 # CKA-CKAD-CKS-Prep
+This repo contains a tutorial on how-to setup k8s in HA mode for training purposes, and it contains study material for CKA, CKAD and CKS.
 
-This repo contains a tutorial on how-to setup k8s in HA mode for training purposes
-There are also example on which to install a single node master with one worker as well.
+## Disclaimer
+This repo and it's contents is not ment to be distributed for commercials purposes!
 
 ## 1 Setting up your shell and exam tips
 This are some settings you can set quickly for the exam:
