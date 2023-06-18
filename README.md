@@ -1,8 +1,32 @@
 # CKA-CKAD-Prep
 
 This repo contains a tutorial on how-to setup k8s in HA mode for training purposes
+There are also example on which to install a single node master with one worker as well.
 
-## 1 Dnsmasq with networkmanager
+## 1 Setting up your shell and exam tips
+This are some settings you can set quickly for the exam:
+
+### vim settings
+Create/edit file ```~/.vimrc```, add the following:
+
+```
+autocmd FileType yaml setlocal ts=2 sw=2 et ai
+```
+
+### alias for kubectl
+Set an alias for kubectl.
+```
+$ alias k='kubectl'
+```
+
+### kubectl explain is your friend
+If the doccumentation is not clear, use:
+
+```
+$ kubectl explain <name of resource>
+```
+
+## 2 Dnsmasq with networkmanager
 If you use the dnsmasq plugin with NetworkManager, see https://fedoramagazine.org/using-the-networkmanagers-dnsmasq-plugin/
 Make sure that ```/etc/nsswitch.conf``` is configure correctly, this must be set to ```hosts:       dns files```, and disable ```systemd-resolved``` with ```sudo systemctl is-disabled systemd-resolved``` and reboot you system.
 
@@ -33,24 +57,24 @@ address=/.apps.lab.local/10.0.0.10
 Reload networkmanager ```sudo systemctl reload NetworkManager```
 
 
-## 2 Deploy haproxy node
+## 3 Deploy haproxy node
 See the folder [haproxy](haproxy) with the config for haproxy
 
-## 3 Deploy nodes
+## 4 Deploy nodes
 See the following [repo](https://github.com/RobMokkink/terraform/tree/main/libvirt-k8s-ubuntu) on how-to deploy ubuntu nodes with
 
-## 4 Prep the nodes Ansible
+## 5 Prep the nodes Ansible
 See the folder [ansible](ansible) contains a prep playbook to setup ubuntu nodes with containerd
 
-## 5 Installation
+## 6 Installation
 There is an example configuration file in [install-k8s](install-k8s) directory which is needed for kubeadm
 in combination with containerd
 
-## 6 Overlay Network
+## 7 Overlay Network
 See folder [overlay-network](overlay-network) for instructions
 
-## 7 Check cluster and label nodes
+## 8 Check cluster and label nodes
 See folder [check-cluster-label-nodes](check-cluster-label-nodes) for instructions
 
-## 8 Ingress
+## 9 Ingress
 See folder [ingress](ingress) for instructions
