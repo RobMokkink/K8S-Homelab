@@ -81,3 +81,6 @@ See folder [ingress](ingress) for instructions
 
 ## 10 Create harbor instance
 See folder [harbor](harbor) for instructions
+
+## CKA Prep
+See folder [cka-tasks](cka-tasks) prep material
