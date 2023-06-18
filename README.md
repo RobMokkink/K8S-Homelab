@@ -78,3 +78,6 @@ See folder [check-cluster-label-nodes](check-cluster-label-nodes) for instructio
 
 ## 9 Ingress
 See folder [ingress](ingress) for instructions
+
+## 10 Create harbor instance
+See folder [harbor](harbor) for instructions
