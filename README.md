@@ -15,9 +15,11 @@ autocmd FileType yaml setlocal ts=2 sw=2 et ai
 ```
 
 ### alias for kubectl
-Set an alias for kubectl.
+Set an alias for kubectl in ```~/.bashrc```
+
 ```
-$ alias k='kubectl'
+alias k='kubectl'
+complete -F __start_kubectl k
 ```
 
 ### kubectl explain is your friend
