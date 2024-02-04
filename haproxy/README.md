@@ -9,7 +9,7 @@ Also make sure the ports are opened in the firewall.
 sudo firewall-cmd --add-port=80/tcp --add-port=443/tcp --add-port=6443/tcp --add-port=8443/tcp --permanent
 
 # Restart service
-sudo systemctl restart firewald
+sudo systemctl restart firewalld
 
 # Verify
 sudo firewall-cmd --list-all
