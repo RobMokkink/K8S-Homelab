@@ -20,6 +20,7 @@ Set an alias for kubectl in ```~/.bashrc```
 ```
 alias k='kubectl'
 complete -F __start_kubectl k
+alias kn="kubectl config set-context --current --namespace"
 ```
 
 ### kubectl explain is your friend
@@ -87,3 +88,6 @@ See folder [harbor](harbor) for instructions
 
 ## 11 Deploy Rook Ceph
 See folder [rook-ceph](rook-ceph) for instructions
+
+## 12 Deploy Tekton
+See folder [tekton](tekton) for instructions

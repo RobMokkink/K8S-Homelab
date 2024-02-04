@@ -1,5 +1,5 @@
 ## Haproxy
-See the haproy.cfg for the configuration, to balancer the master nodes behind haproxy.
+See the [haproy.cfg](haproxy.cfg) for the configuration, to balancer the master nodes behind haproxy.
 If you use a selinux based distro make sure that the boolean to connect to any port is set, see the following command:
 ```setsebool -P haproxy_connect_any on```
 
