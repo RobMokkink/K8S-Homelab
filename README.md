@@ -5,7 +5,7 @@ This repo contains a tutorial on how-to setup k8s in HA mode for training purpos
 This repo and it's contents is not ment to be distributed for commercials purposes"
 
 ## 1 Setting up your shell and exam tips
-This are some settings you can set quickly for the exam:
+This are some settings you can set.
 
 ### vim settings
 Create/edit file ```~/.vimrc```, add the following:
@@ -82,3 +82,6 @@ See folder [ingress](ingress) for instructions
 
 ## 10 Create harbor instance
 See folder [harbor](harbor) for instructions
+
+## 11 Deploy Rook Ceph
+See folder [rook-ceph](rook-ceph) for instructions
