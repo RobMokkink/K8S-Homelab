@@ -1,8 +1,8 @@
-# CKA-CKAD-CKS-Prep
-This repo contains a tutorial on how-to setup k8s in HA mode for training purposes, and it contains study material for CKA, CKAD and CKS.
+# K8S Homelab
+This repo contains a tutorial on how-to setup k8s in HA mode for training purposes.
 
 ## Disclaimer
-This repo and it's contents is not ment to be distributed for commercials purposes!
+This repo and it's contents is not ment to be distributed for commercials purposes"
 
 ## 1 Setting up your shell and exam tips
 This are some settings you can set quickly for the exam:
@@ -82,6 +82,3 @@ See folder [ingress](ingress) for instructions
 
 ## 10 Create harbor instance
 See folder [harbor](harbor) for instructions
-
-## CKA Prep
-See folder [cka-tasks](cka-tasks) prep material
