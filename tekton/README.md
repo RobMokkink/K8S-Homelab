@@ -15,3 +15,13 @@ See the [ingress-example.yaml](ingress-example.yaml)
 
 # Commandline
 See https://tekton.dev/docs/cli
+
+# Create secret for registry
+Example:
+
+```
+$ kubectl create secret docker-registry harbor --docker-server https://harbor.lab.local --docker-username tekton --docker-password "SuperSecretPassw0rd!" -n tekton-pipelines
+```
+
+# Setup authentication to git repository
+See https://tekton.dev/docs/pipelines/auth/
