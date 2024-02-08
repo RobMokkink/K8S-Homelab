@@ -25,3 +25,9 @@ $ kubectl create secret docker-registry harbor --docker-server https://harbor.la
 
 # Setup authentication to git repository
 See https://tekton.dev/docs/pipelines/auth/
+
+Create a base64 of your private key, and for then known hosts, do the following, see example below:
+```
+$ ssh-keyscan github.com > ssh_known_hosts
+$ cat ssh_know_hosts | base64 -w0
+```
