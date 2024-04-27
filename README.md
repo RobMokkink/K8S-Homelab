@@ -65,7 +65,7 @@ Reload networkmanager ```sudo systemctl reload NetworkManager```
 See the folder [haproxy](haproxy) with the config for haproxy
 
 ## 4 Deploy nodes
-See the following [repo](https://github.com/RobMokkink/terraform/tree/main/libvirt-k8s-ubuntu) on how-to deploy ubuntu nodes with
+See the following [repo](https://github.com/RobMokkink/opentofu-examples/tree/main/libvirt-k8s-ubuntu) on how-to deploy ubuntu nodes with opentofu
 
 ## 5 Prep the nodes Ansible
 See the folder [ansible](ansible) contains a prep playbook to setup ubuntu nodes with containerd
