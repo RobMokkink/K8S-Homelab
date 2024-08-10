@@ -31,7 +31,7 @@ $ kubectl explain <name of resource>
 ```
 
 ## 2 Dnsmasq with networkmanager
-If you use the dnsmasq plugin with NetworkManager, see https://fedoramagazine.org/using-the-networkmanagers-dnsmasq-plugin/
+If you use the dnsmasq plugin with NetworkManager, see https://fedoramagazine.org/using-the-networkmanagers-dnsmasq-plugin/.
 Adjust the settings for systemd-resolved.
 
 Create file ```/etc/systemd/resolved.conf.d/disable-stub.conf``` with the following content:
