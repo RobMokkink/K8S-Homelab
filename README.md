@@ -2,7 +2,7 @@
 This repo contains a tutorial on how-to setup k8s in HA mode for training purposes.
 
 ## Disclaimer
-This repo and it's contents is not ment to be distributed for commercials purposes"
+This repo and it's contents is not ment to be distributed for commercials purposes.
 
 ## 1 Setting up your shell and exam tips
 This are some settings you can set.
@@ -32,7 +32,24 @@ $ kubectl explain <name of resource>
 
 ## 2 Dnsmasq with networkmanager
 If you use the dnsmasq plugin with NetworkManager, see https://fedoramagazine.org/using-the-networkmanagers-dnsmasq-plugin/
-Make sure that ```/etc/nsswitch.conf``` is configure correctly, this must be set to ```hosts:       dns files```, and disable ```systemd-resolved``` with ```sudo systemctl is-disabled systemd-resolved``` and reboot you system.
+Adjust the settings for systemd-resolved.
+
+Create file ```/etc/systemd/resolved.conf.d/disable-stub.conf``` with the following content:
+
+```
+[Resolve]
+DNSStubListener=no
+```
+
+Create symlink
+```
+$ sudo ln -s /var/run/NetworkManager/resolv.conf /etc/resolv.conf
+```
+
+Restart the service
+```
+$ sudo systemctl restart systemd-resolved.service
+```
 
 Make sure dns entries are there, see the following example:
 
