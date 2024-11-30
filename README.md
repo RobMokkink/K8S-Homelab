@@ -66,19 +66,18 @@ Make sure dns entries are there, see the following example:
 
 And the following for k8s api and wildcard ingress ```/etc/NetworkManager/dnsmasq.d/02-lab.conf```
 
-
-Make sure ```/etc/nsswitch.conf``` has the following entry for the ```hosts:``` line:
-
-```
-hosts:      dns files
-```
-
 ```
 # K8S api points to lb
 address=/k8s.lab.local/10.0.0.10
 
 # wildcard dns entry points to lb
 address=/.apps.lab.local/10.0.0.10
+```
+
+Make sure ```/etc/nsswitch.conf``` has the following entry for the ```hosts:``` line:
+
+```
+hosts:      dns files
 ```
 
 Reload networkmanager ```sudo systemctl reload NetworkManager```
