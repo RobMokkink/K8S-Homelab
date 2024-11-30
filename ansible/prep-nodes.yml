@@ -6,6 +6,8 @@
     k8s_url_apt_key: "https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key"
     k8s_gpgpath: "/etc/apt/keyrings/kubernetes-apt-keyring.gpg"
     k8s_repository: "https://pkgs.k8s.io/core:/stable:/v1.31/deb/"
+    docker_url_apt_key: "https://download.docker.com/linux/ubuntu/gpg"
+    docker_gpgpath: "/etc/apt/trusted.gpg.d/docker.gpg"
     k8s_network: "calico"
     k8s_network_fw:
       calico:
@@ -125,7 +127,7 @@
         port: "{{ item}}"
         proto: udp
       loop: "{{ k8s_network_fw[k8s_network].udp }}"
-   
+
     - name: Enable the ufw firewall at startup
       ufw:
         state: enabled
@@ -144,13 +146,11 @@
         name: "{{ req_packages }}"
         state: present
 
-    - name: Add apt gpg keys
-      apt_key:
-        url: "{{ item }}"
-        state: present
-      loop:
-        - https://download.docker.com/linux/ubuntu/gpg
-        # - https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    - name: Get Docker package key
+      shell: >
+        sudo curl -fsSL {{ docker_url_apt_key }} | sudo gpg --dearmour -o {{ docker_gpgpath }}
+      args:
+        creates: "{{ k8s_gpgpath }}"
 
     - name: Get Kubernetes package key
       shell: >
@@ -181,10 +181,21 @@
         name: "{{ container_packages }}"
         state: present
 
-    - name: Copy config.toml
-      copy:
-        src: config.toml
-        dest: /etc/containerd/config.toml
+    - name: Start and enable containerd
+      ansible.builtin.service:
+        name: containerd
+        enabled: true
+        state: enabled
+
+    - name: Create default config.toml file
+      shell: >
+        containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
+
+    - name: Configure containerd for systemd
+      ansible.builtin.replace:
+        path: /etc/containerd/config.toml
+        regexp: "SystemdCgroup = false"
+        replace: "SystemdCgroup = true"
       notify: restart containerd
 
     - name: Install the k8s packages
