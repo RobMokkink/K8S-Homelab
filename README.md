@@ -1,8 +1,7 @@
 # K8S Homelab
 This repo contains a tutorial on how-to setup k8s in HA mode for training purposes.
 
-## Disclaimer
-This repo and it's contents is not ment to be distributed for commercials purposes.
+This repo and it's contents are not ment to be distributed for commercials purposes.
 
 ## 1 Setting up your shell and exam tips
 This are some settings you can set.
@@ -66,6 +65,13 @@ Make sure dns entries are there, see the following example:
 ```
 
 And the following for k8s api and wildcard ingress ```/etc/NetworkManager/dnsmasq.d/02-lab.conf```
+
+
+Make sure ```/etc/nsswitch.conf``` has the following entry for the ```hosts:``` line:
+
+```
+hosts:      dns files
+```
 
 ```
 # K8S api points to lb
