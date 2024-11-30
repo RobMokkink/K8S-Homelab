@@ -185,7 +185,7 @@
       ansible.builtin.service:
         name: containerd
         enabled: true
-        state: enabled
+        state: started
 
     - name: Create default config.toml file
       shell: >
