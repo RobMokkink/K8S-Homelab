@@ -2,7 +2,10 @@
 - name: Prep nodes for k8s
   hosts: all
   vars:
-    k8s_version: "1.30.7-00"
+    k8s_version: "1.31.3-1.1"
+    k8s_url_apt_key: "https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key"
+    k8s_gpgpath: "/etc/apt/keyrings/kubernetes-apt-keyring.gpg"
+    k8s_repository: "https://pkgs.k8s.io/core:/stable:/v1.31/deb/"
     k8s_network: "calico"
     k8s_network_fw:
       calico:
@@ -146,18 +149,24 @@
         url: "{{ item }}"
         state: present
       loop:
-        - https://packages.cloud.google.com/apt/doc/apt-key.gpg
         - https://download.docker.com/linux/ubuntu/gpg
+        # - https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+    - name: Get Kubernetes package key
+      shell: >
+        curl -fsSL {{ k8s_url_apt_key }} | gpg --dearmor -o {{ k8s_gpgpath }}
+      args:
+        creates: "{{ k8s_gpgpath }}"
 
     - name: Add the docker apt repository
       apt_repository:
-        repo: "deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
         filename: docker-ce
+        repo: "deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
 
     - name: Add the k8s apt repository
       apt_repository:
-        repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+        repo: "deb [signed-by={{ k8s_gpgpath }}] {{ k8s_repository }} /"
         state: present
         filename: kubernetes
 
@@ -172,13 +181,11 @@
         name: "{{ container_packages }}"
         state: present
 
-
     - name: Copy config.toml
       copy:
         src: config.toml
         dest: /etc/containerd/config.toml
       notify: restart containerd
-
 
     - name: Install the k8s packages
       apt:
