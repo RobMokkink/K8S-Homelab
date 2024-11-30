@@ -2,6 +2,12 @@
 The ansible playbook pre-install.yml is a quick and dirty playbook to prep the k8s nodes. It is for learning purposes only!
 It will open the right ports for k8s for the overlay network and install the containerd runtime.
 
+# # Collections
+
+Install the following collections:
+    - community.general
+
+## Variables
 Adjust the variables inside the playbook or specify them on the commandline
 
 ```

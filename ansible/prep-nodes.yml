@@ -2,7 +2,7 @@
 - name: Prep nodes for k8s
   hosts: all
   vars:
-    k8s_version: "1.28.2-00"
+    k8s_version: "1.30.7-00"
     k8s_network: "calico"
     k8s_network_fw:
       calico:
@@ -122,7 +122,7 @@
         port: "{{ item}}"
         proto: udp
       loop: "{{ k8s_network_fw[k8s_network].udp }}"
-    
+   
     - name: Enable the ufw firewall at startup
       ufw:
         state: enabled
@@ -163,8 +163,8 @@
 
     - name: Update packages after adding repo
       apt:
-        update_cache: True
-        force_apt_get: True
+        update_cache: true
+        force_apt_get: true
         cache_valid_time: 3600
 
     - name: Install container runtime packages
@@ -201,4 +201,4 @@
         name: containerd
         state: restarted
         enabled: true
-        daemon_reload: yes
+        daemon_reload: true
